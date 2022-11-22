@@ -1,4 +1,4 @@
-- 👋 Hi, I’m @dragonknight-kalameet
-- 🌱 I’m currently learning java and pawn
-- 💞️ I’m looking to collaborate on servers with amxmodx
-- 📫 How to reach me discord
+-  Vivat, I’m @dragonknight-kalameet
+-  I’m currently learning java and pawn
+-  I’m looking to collaborate on servers with amxmodx
+-  How to reach me discord Kalameet#3018
