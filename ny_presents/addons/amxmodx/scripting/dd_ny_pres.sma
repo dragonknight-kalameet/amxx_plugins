@@ -8,7 +8,7 @@
 #define AUTHOR		"D|D feat DK.Kalameet"
 
 //Options
-#define RESPAWN_TIME	10.0
+#define RESPAWN_TIME	30.0
 #define REWARD			random_num(50, 100) // Comment it if there's no reward.
 #define RENDER 								// Comment it out so that the models have a glow effect.
 
@@ -211,7 +211,12 @@ public fw_TraceAttack(ent, attacker, Float:Damage, Float:Dir[3], ptr, DamageType
 {
 	if(!pev_valid(ent))
 		return HAM_IGNORED;
+		
+	new classname[32]; pev(ent, pev_classname, classname, charsmax(classname));
 
+	if(!equal(classname, g_class))
+		return HAM_IGNORED;
+		
 	create_exp(ent);
 	#if defined REWARD
 	give_reward(attacker);
@@ -223,7 +228,12 @@ public fw_TraceAttack(ent, attacker, Float:Damage, Float:Dir[3], ptr, DamageType
 public fw_PresentThink(ent) {
 	if(!pev_valid(ent))
 		return HAM_IGNORED;
-		
+	
+	new classname[32]; pev(ent, pev_classname, classname, charsmax(classname));
+
+	if(!equal(classname, g_class))
+		return HAM_IGNORED;
+	
 	if(pev(ent, pev_solid) == SOLID_NOT) {
 		set_visib(ent);
 	}
