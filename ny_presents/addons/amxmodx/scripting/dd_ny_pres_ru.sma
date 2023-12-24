@@ -4,38 +4,38 @@
 #include <amxmisc>
 
 #define NAME		"DD_Presents"
-#define VERSION		"0.8"
+#define VERSION		"0.81"
 #define AUTHOR		"D|D feat DK.Kalameet"
 
 //Options
-#define RESPAWN_TIME	10.0
-//#define REWARD			random_num(50, 100)	// Закомментируй, если без награды
+#define RESPAWN_TIME	30.0
+#define REWARD		random_num(50, 100)	// Закомментируй, если без награды
 //#define RENDER 								// Закомментируй, чтобы у моделей был эффект свечения
 
 
-#define ITEMS_SKINS	3		// Change only if you edit models
+#define ITEMS_SKINS	3		// Не менять, только если знаешь что делаешь
 
 
 //***********Menu and items***********
-new const MENU_TITLE[] = "Меню предметов";
+new const MENU_TITLE[] = "DK Presents";
 
 new const Menu[][] = {
-	"Установить",
-	"Удалить",
-	"Удалить всё",
-	"Сохранить всё",
-	"Загрузить всё^n",
-	"\yПредмет [\w%s\y]"
+	"Set",
+	"Delete",
+	"Delete all",
+	"Save",
+	"Load^n",
+	"\yItem [\w%s\y]"
 };
 
 new const Items[][] = 
 {
-	"Подарок 1",
-	"Подарок 2",
-	"Подарок 3",
-	"Снеговик К",
-	"Снеговик Ж",
-	"Снеговик З"
+	"Present 1",
+	"Present 2",
+	"Present 3",
+	"Snowman R",
+	"Snowman Y",
+	"Snowman G"
 };
 
 #if defined RENDER
@@ -211,7 +211,12 @@ public fw_TraceAttack(ent, attacker, Float:Damage, Float:Dir[3], ptr, DamageType
 {
 	if(!pev_valid(ent))
 		return HAM_IGNORED;
+		
+	new classname[32]; pev(ent, pev_classname, classname, charsmax(classname));
 
+	if(!equal(classname, g_class))
+		return HAM_IGNORED;
+		
 	create_exp(ent);
 	#if defined REWARD
 	give_reward(attacker);
@@ -223,7 +228,12 @@ public fw_TraceAttack(ent, attacker, Float:Damage, Float:Dir[3], ptr, DamageType
 public fw_PresentThink(ent) {
 	if(!pev_valid(ent))
 		return HAM_IGNORED;
-		
+	
+	new classname[32]; pev(ent, pev_classname, classname, charsmax(classname));
+
+	if(!equal(classname, g_class))
+		return HAM_IGNORED;
+	
 	if(pev(ent, pev_solid) == SOLID_NOT) {
 		set_visib(ent);
 	}
@@ -254,8 +264,6 @@ public OpenMenu(id)
 	formatex(mode, charsmax(mode), Menu[lastItem], Items[type_item[id]]);
 	menu_additem(menu, mode, "5");
 	
-	menu_setprop(menu, MPROP_EXITNAME, "Выход");
-
 	menu_display(id, menu, 0);
 }
 	 
